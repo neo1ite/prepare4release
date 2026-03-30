@@ -1,0 +1,27 @@
+#!perl
+use strict;
+use warnings;
+use Test2::V1;
+use Test2::Tools::Basic qw(done_testing);
+use Test2::Tools::Compare qw(like);
+
+use App::prepare4release;
+
+local $ENV{PREPARE4RELEASE_PERL_MAX} = '5.16';
+
+my $gh = App::prepare4release->render_github_ci_yml(
+	[qw( 5.10 5.12 )],
+	[qw( libssl-dev )]
+);
+like( $gh, qr/shivammathur\/setup-perl/, 'GitHub workflow uses setup-perl' );
+like( $gh, qr/libssl-dev/,              'apt packages in GitHub YAML' );
+like( $gh, qr/perl-version:/, 'matrix perl-version key' );
+
+my $gl = App::prepare4release->render_gitlab_ci_yml(
+	[qw( 5.10 5.12 )],
+	[] );
+like( $gl, qr/parallel:/,     'GitLab parallel' );
+like( $gl, qr/PERL_VERSION:/, 'GitLab matrix var' );
+like( $gl, qr{image:\s*perl:\$\{PERL_VERSION\}}, 'GitLab perl image' );
+
+done_testing;

@@ -1,0 +1,16 @@
+Revision history for App::prepare4release
+
+0.001   CI: GitHub Actions / GitLab CI templates (Perl matrix via MetaCPAN ceiling),
+        optional ci.apt_packages, Alien::* scan hint, tests and expanded POD.
+        xt/metacpan-live.t runs against live MetaCPAN when RELEASE_TESTING is set.
+        Tests use Test2::V1; Makefile.PL author Sergey Kovalev.
+        Warn on Test::More/Test::Most in t/xt; xt/author extended tests (Synopsis, …).
+        Removed Test::Kwalitee::Extra / xt/author/kwalitee-extra.t.
+        xt/author/pause-permissions.t and pod-coverage.t use Test::More (not Test2)
+        so Test::PAUSE::Permissions / Test::Pod::Coverage load correctly.
+        Those tests' skip_all now includes $^X and $@ (diagnose wrong perl / @INC).
+        pause-permissions: use all_permissions_ok (CPAN API). pod-coverage: FQCN
+        pod_coverage_ok (avoid Test::More plan import clash).
+        xt/author/cpants.t: Module::CPANTS::Analyse on make tardist (RELEASE_TESTING=1).
+        cpants.t: require Module::CPANTS::Kwalitee->can(new); TEST_REQUIRES Kwalitee.
+        cpants.t: unlink existing tarball before tardist (non-interactive gzip).
