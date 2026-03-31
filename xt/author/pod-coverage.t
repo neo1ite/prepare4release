@@ -20,31 +20,40 @@ Test::Pod::Coverage::pod_coverage_ok(
 		trustme => [
 			qw(
 				DEFAULT_CONFIG_FILENAME
-				POSTAMBLE_POD2GITHUB
-				POSTAMBLE_POD2MARKDOWN
 				apply_ci_files
+				apply_cpan_release_prep
 				apply_makefile_patches
-				apply_pod_badges
+				apply_readme_badges
+				default_manifest_skip_template
 				bugtracker_url
-				build_pod_badge_html
+				build_pod_badge_markdown
 				ci_apt_packages
 				cpan_dist_name_from_identity
 				effective_git_host
 				ensure_github_workflow
 				ensure_gitlab_ci
+				ensure_license_file
+				ensure_manifest_skip_file
 				ensure_meta_merge
 				ensure_postamble
+				ensure_readme_stub_for_cpan
 				ensure_xt_author_tests
 				fetch_latest_perl_release_version
 				file_uses_legacy_assertion_framework
+				git_default_branch
 				find_lib_pm_files
 				git_author
 				git_hash
 				git_repo_name
 				git_server
+				gitlab_ci_badge_host
+				gitlab_ci_badge_urls
 				https_base
-				inject_pod_badges_block
+				infer_license_key_from_license_file
+				infer_license_key_from_text
 				license_badge_info
+				license_badge_label_and_href
+				license_file_blob_url
 				list_files_for_eol_xt
 				load_config_file
 				makefile_has_pod2github
@@ -61,18 +70,23 @@ Test::Pod::Coverage::pod_coverage_ok(
 				perl_matrix_tags
 				perl_min_badge_label
 				read_makefile_pl_snippets
+				inject_readme_badges_relpath
+				regenerate_readme_md
 				render_github_ci_yml
 				render_gitlab_ci_yml
 				repology_metacpan_badge_url
+				write_inject_readme_badges_script
 				repository_git_url
 				repository_path_segment
 				repository_web_url
 				resolve_combined_min_perl
+				resolve_min_perl_for_badge
 				resolve_config_path
 				resolve_identity
 				run
 				scan_files_for_alien_hints
 				split_pm_code_and_pod
+				strip_pod_badges_from_version_from
 				warn_legacy_test_frameworks
 				write_makefile_close_index
 			)

@@ -42,9 +42,9 @@ create a GitLab CI pipeline with a similar Perl matrix.
 
 =item C<--cpan>
 
-Adds CPAN-oriented POD badges (Repology/MetaCPAN, fury.io version, cpants) in
-the F<VERSION_FROM> module; see L<App::prepare4release>. License / Perl / CI
-badges are always maintained when POD is updated.
+Adds CPAN-oriented Markdown shield lines (Repology/MetaCPAN, fury.io, cpants) in
+F<README.md> together with license and Perl badges; see L<App::prepare4release>.
+CI badges follow C<--github> / C<--gitlab> as described there.
 
 =item C<--verbose>
 

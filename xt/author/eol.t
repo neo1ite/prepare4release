@@ -20,6 +20,7 @@ my @files = qw(
     t/alien-scan.t
     t/ci-ensure.t
     t/ci-render.t
+    t/config-load.t
     t/perl-matrix.t
     t/pm-min-version.t
     xt/metacpan-live.t

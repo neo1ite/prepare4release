@@ -103,4 +103,9 @@ SKIP: {
 	}
 }
 
+if ( -f $tb_path ) {
+	unlink $tb_path
+		or diag "Could not remove tarball $tb_path (portability tests dislike *.tar.gz in tree): $!";
+}
+
 done_testing;

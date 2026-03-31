@@ -1,8 +1,11 @@
 /blib/
+/MANIFEST.bak
 /Makefile
 /Makefile.old
 /MYMETA.json
 /MYMETA.yml
+/META.json
+/META.yml
 /pm_to_blib
 /_build/
 /Build
@@ -11,4 +14,4 @@
 /local/
 /.carton/
 /.prove
-prepare4release-*.tar.gz
+App-prepare4release-*.tar.gz

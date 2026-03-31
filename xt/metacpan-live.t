@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Test2::V1;
 use Test2::Tools::Basic qw(skip_all ok diag plan);
-use Test2::Tools::Compare qw(cmp_ok like);
+use Test2::Tools::Compare qw(like);
 use version ();
 
 BEGIN {
@@ -17,24 +17,19 @@ use JSON::PP ();
 
 plan tests => 6;
 
-my $metacpan_url =
-'https://fastapi.metacpan.org/v1/release/_search?q=distribution:perl&size=1&sort=version:desc';
+my $metacpan_url = 'https://fastapi.metacpan.org/v1/release/perl';
 
 my $http = HTTP::Tiny->new( timeout => 30 );
 my $res  = $http->get($metacpan_url);
 
-ok( $res->{success}, 'MetaCPAN GET succeeds' )
+ok( $res->{success}, 'MetaCPAN GET /release/perl succeeds' )
 	or diag "status=$res->{status} reason=$res->{reason}";
 
 my $data = eval { JSON::PP->new->decode( $res->{content} // '' ) };
 ok( $data && ref $data eq 'HASH', 'MetaCPAN response is JSON object' )
 	or diag $@;
 
-my $hits = $data->{hits};
-if ( ref $hits eq 'HASH' && ref $hits->{hits} eq 'ARRAY' ) {
-	$hits = $hits->{hits};
-}
-ok( ref $hits eq 'ARRAY' && @{ $hits }, 'MetaCPAN hits array is non-empty' );
+ok( $data->{version}, 'MetaCPAN release has version field' );
 
 {
 	local $ENV{PREPARE4RELEASE_PERL_MAX};
@@ -48,5 +43,8 @@ ok( ref $hits eq 'ARRAY' && @{ $hits }, 'MetaCPAN hits array is non-empty' );
 	ok( $got, 'ceiling parses as a Perl version' )
 		or diag $@;
 
-	cmp_ok( $got, '>=', version->parse('v5.10.0'), 'ceiling is at least 5.10' );
+	ok(
+		$got && $got >= version->parse('v5.10.0'),
+		'ceiling is at least 5.10'
+	);
 }
