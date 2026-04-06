@@ -25,6 +25,7 @@ t/helpers-more.t
 t/more-coverage.t
 t/perl-matrix.t
 t/pm-min-version.t
+t/postamble-crlf.t
 xt/author/compile-internal.t
 xt/author/compile.t
 xt/author/cpants.t

@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Carp qw(croak);
 use Cwd qw(getcwd);
@@ -500,11 +500,12 @@ sub _replace_marked_postamble_block {
 	return $content
 		unless $content =~ /^\# BEGIN PREPARE4RELEASE_POSTAMBLE/m;
 	my $out = $content;
-	$out =~ s{
-		^\# BEGIN PREPARE4RELEASE_POSTAMBLE \n
-		.*?
-		^\# END PREPARE4RELEASE_POSTAMBLE \n?
-	}{$new_block}msx;
+	# Line endings: require \r?\n so CRLF files (common on Windows / some editors)
+	# still match; a strict \n-only pattern leaves the block unchanged and pod2*
+	# never updates.
+	# No /x: it would strip spaces in "# BEGIN ..." and treat # as comments. The pattern
+	# must be a single line: multiline s{}{} would include literal \n\t from this file.
+	$out =~ s/^\# BEGIN PREPARE4RELEASE_POSTAMBLE\s*\r?\n.*?^\# END PREPARE4RELEASE_POSTAMBLE\s*\r?\n?/$new_block/ms;
 	return $out;
 }
 
@@ -656,6 +657,7 @@ sub ensure_meta_merge {
 
 sub _patch_meta_merge_block {
 	my ( $class, $content, $repo_git_url, $repo_web, $bugtracker_web, $verbose ) = @_;
+	my $before = $content;
 
 	if ( $content =~ s/(repository\s*=>\s*\{[^}]*?)(\burl\s*=>\s*)'[^']*'/${1}${2}'$repo_git_url'/s ) {
 		1;
@@ -688,7 +690,9 @@ BUG
 		$content =~ s/\Q$resources_head\E/$resources_head\n$inj/s;
 	}
 
-	warn "[prepare4release] Makefile.PL: patched existing META_MERGE\n" if $verbose;
+	if ( $content ne $before ) {
+		warn "[prepare4release] Makefile.PL: patched existing META_MERGE\n" if $verbose;
+	}
 	return $content;
 }
 

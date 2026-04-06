@@ -1,5 +1,14 @@
 Revision history for App::prepare4release
 
+0.03    2026-04-05
+        Fix Makefile.PL PREPARE4RELEASE postamble replacement: _replace_marked_postamble_block
+        used s/// with the /x flag, which ignored spaces in the pattern and treated # as
+        a comment, so lines like "# BEGIN PREPARE4RELEASE_POSTAMBLE" never matched and
+        pod2markdown was not upgraded to pod2github under --github/--gitlab. Use a
+        single-line pattern with ms only (no /x). _patch_meta_merge_block: log "patched
+        existing META_MERGE" only when content actually changes.
+        Tests: t/postamble-crlf.t (CRLF + LF + realistic Makefile.PL fragment).
+
 0.02    2026-04-05
         Invalid prepare4release.json: warn and treat as {} (no fatal decode).
         Root JSON keys copied into Makefile.PL WriteMakefile: author, abstract,

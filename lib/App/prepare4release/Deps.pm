@@ -1,6 +1,6 @@
 package App::prepare4release::Deps;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use 5.010;
 use strict;
